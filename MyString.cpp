@@ -91,3 +91,41 @@ char MyString::at(int index) const {
 	else
 		return arr[index];
 }
+// re-using the function through Object's constructor
+MyString& MyString::insert(int loc, char c) {
+	MyString temp(c);
+	return insert(loc, temp);
+}
+MyString& MyString::insert(int loc, const char* str) {
+	MyString temp(str);
+	return insert(loc, temp);
+}
+MyString& MyString::insert(int loc, const MyString& str) {
+
+	int insert_len = str.len;
+	if (loc >= len || loc < 0)
+		return *this;
+
+	if (len + insert_len > memory_capacity)
+	{
+		memory_capacity = len + insert_len;
+
+		char* prev_arr = arr;
+		arr = new char[len + insert_len];
+		for (int i = 0; i != loc; i++) arr[i] = prev_arr[i];
+		for (int i = 0; i != insert_len; i++) arr[i + loc] = str.arr[i];
+		for (int i = loc; i != len; i++) arr[i + insert_len] = prev_arr[i];
+
+		len = len + str.len;
+
+		return *this;
+	}
+
+	for (int i = len - 1; i != loc - 1; i--) arr[i + insert_len] = arr[i];
+	for (int i = 0; i != insert_len; i++) arr[i + loc] = str.arr[i];
+
+	len = len + str.len;
+
+	return *this;
+}
+
