@@ -1,4 +1,10 @@
 #include "MyString.h"
+MyString::MyString(int capacity)
+{
+	arr = new char[capacity];
+	len = 0;
+	memory_capacity = capacity;
+}
 MyString::MyString(char c)
 {
 	arr = new char[1];
@@ -139,22 +145,54 @@ MyString& MyString::erase(int loc, int num)
 	len = len - num;
 	return *this;
 }
-
-int MyString::find(int from, MyString& str) const {
+int MyString::find(int from, MyString& str) const
+{
 	int i, j;
 	if (str.len == 0)	return -1;
 	for (i = from; i < len - str.len; i++)
 	{
-
+		for (j = 0; j < str.len; j++)
+		{
+			if (arr[i + j] != str.arr[j]) break;
+		}
+		if (j == str.len)	return i;
 	}
+	return -1;
 }
-
-int MyString::find(int from, const char* str) const {
+int MyString::find(int from, const char* str) const
+{
 	MyString temp(str);
 	return find(from, temp);
 }
-int MyString::find(int from, char c) const {
+int MyString::find(int from, char c) const
+{
 	MyString temp(c);
 	return find(from, temp);
 }
+int MyString::compare(MyString& str) const
+{
+	for (int i = 0; i < std::fmin(len, str.len); i++)
+	{
+		if(arr[i] > str.arr[i])
+			return 1;
+		else if(arr[i] < str.arr[i])
+			return -1;
+	}
 
+	if (len == str.len)
+		return 0;
+	else if (len > str.len)
+		return 1;
+	else
+		return -1;
+}
+int MyString::compare(const char* str) const
+{
+	MyString temp(str);
+	return compare(temp);
+}
+int MyString::compare(char c) const
+{
+	MyString temp(c);
+	return compare(temp);
+}
