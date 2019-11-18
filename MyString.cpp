@@ -129,3 +129,32 @@ MyString& MyString::insert(int loc, const MyString& str) {
 	return *this;
 }
 
+MyString& MyString::erase(int loc, int num)
+{
+	if (num <0 ||loc < 0 || loc >= len)
+		return *this;
+	for (int i = loc + num; i < len; i++)
+		arr[i - num] = arr[i];
+
+	len = len - num;
+	return *this;
+}
+
+int MyString::find(int from, MyString& str) const {
+	int i, j;
+	if (str.len == 0)	return -1;
+	for (i = from; i < len - str.len; i++)
+	{
+
+	}
+}
+
+int MyString::find(int from, const char* str) const {
+	MyString temp(str);
+	return find(from, temp);
+}
+int MyString::find(int from, char c) const {
+	MyString temp(c);
+	return find(from, temp);
+}
+

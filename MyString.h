@@ -22,4 +22,5 @@ public:
 	MyString& insert(int loc, char c);
 	MyString& insert(int loc, const char* str);
 	MyString& insert(int loc, const MyString& str);
+	MyString& erase(int loc, int num);
 };
